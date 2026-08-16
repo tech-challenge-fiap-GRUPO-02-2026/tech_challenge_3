@@ -1,0 +1,13 @@
+# Dependências opcionais para usar os integradores "reais" de LangChain /
+# LangGraph / FAISS / OpenAI em vez dos fallbacks leves embutidos no
+# projeto (TfidfVectorStore e executor sequencial). O projeto funciona
+# corretamente sem este arquivo instalado.
+langchain>=0.2
+langchain-core>=0.2
+langchain-community>=0.2
+langgraph>=0.1
+faiss-cpu>=1.8
+sentence-transformers>=2.7
+langchain-openai>=0.1
+openai>=1.30
+python-dotenv>=1.0

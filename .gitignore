@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+artifacts/finetuned_model/
+artifacts/prontuarios.db
+artifacts/eval_report.json
+logs/*.jsonl
+.env
+*.egg-info/
+.DS_Store

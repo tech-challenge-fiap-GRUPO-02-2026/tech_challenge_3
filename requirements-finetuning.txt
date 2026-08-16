@@ -1,0 +1,11 @@
+# Dependências opcionais para rodar o fine-tuning LoRA de verdade
+# (src/finetuning/train.py). Pesadas — instale apenas se for treinar.
+torch>=2.2
+transformers>=4.40
+peft>=0.10
+datasets>=2.18
+accelerate>=0.29
+
+# Tradução automática EN->PT do PubMedQA (src/data_processing/download_pubmedqa.py)
+sentencepiece>=0.2
+sacremoses>=0.1

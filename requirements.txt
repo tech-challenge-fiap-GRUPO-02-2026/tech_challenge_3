@@ -1,0 +1,5 @@
+# Dependências principais — suficientes para rodar o assistente, o RAG
+# (TF-IDF local), o fluxo clínico (executor sequencial), os guardrails,
+# o logging de auditoria e toda a suíte de testes, sem GPU e sem chaves
+# de API.
+pytest>=8.0

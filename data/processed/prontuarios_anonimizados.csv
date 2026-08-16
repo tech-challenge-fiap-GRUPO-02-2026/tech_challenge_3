@@ -1,0 +1,7 @@
+paciente_id,idade,sexo,diagnostico,alergias,medicacoes_em_uso
+PAC-0001,67,F,Insuficiencia cardiaca congestiva,Dipirona,Furosemida 40mg; Losartana 50mg
+PAC-0002,54,M,Diabetes mellitus tipo 2,Nenhuma conhecida,Metformina 850mg; Insulina NPH
+PAC-0003,29,F,Dor toracica atipica em investigacao,Penicilina,Nenhuma
+PAC-0004,71,M,Sepse de foco pulmonar,Nenhuma conhecida,Enalapril 10mg
+PAC-0005,45,F,Cetoacidose diabetica,Sulfa,Insulina Regular
+PAC-0006,60,M,Infarto agudo do miocardio com supra de ST,Nenhuma conhecida,AAS 100mg; Atorvastatina 40mg

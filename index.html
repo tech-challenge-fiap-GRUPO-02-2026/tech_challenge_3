@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Tech Challenge Fase 3 — Assistente Médico Virtual · FIAP 2026</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏥</text></svg>"/>
+<style>
+:root{
+  --p0:#052E2B; --p1:#064E3B; --p2:#065F46; --p3:#059669;
+  --p4:#10B981; --p5:#34D399; --p6:#6EE7B7; --p7:#D1FAE5;
+  --b1:#3B82F6; --b2:#DBEAFE; --b3:#1D4ED8;
+  --a1:#F59E0B; --a2:#FEF3C7; --a3:#92400E;
+  --r1:#EF4444; --r2:#FEE2E2; --r3:#991B1B;
+  --tx:#0B1A17; --tx2:#374151; --mu:#6B7280;
+  --bd:#E5E7EB; --bg:#F7FBF9; --wh:#FFFFFF;
+  --sh:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(6,95,70,.06);
+  --sh2:0 8px 32px rgba(6,95,70,.16);
+  --r:12px; --r2px:8px; --r3:20px;
+  --nav-h:60px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--tx);line-height:1.7;
+  font-size:15px;overflow-x:hidden;
+}
+img,svg{max-width:100%}
+
+/* ═══════════ NAV ═══════════ */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--bd);
+  height:var(--nav-h);
+  display:flex;align-items:center;
+  padding:0 32px;gap:4px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+nav::-webkit-scrollbar{display:none}
+nav a{
+  white-space:nowrap;
+  padding:6px 14px;border-radius:6px;
+  font-size:.78rem;font-weight:600;
+  color:var(--mu);text-decoration:none;
+  transition:background .15s,color .15s;
+}
+nav a:hover{background:var(--p7);color:var(--p2)}
+nav .nav-brand{font-weight:800;font-size:.9rem;color:var(--p2);margin-right:12px;white-space:nowrap}
+nav .nav-sep{width:1px;height:20px;background:var(--bd);flex-shrink:0;margin:0 8px}
+
+/* ═══════════ HERO ═══════════ */
+.hero{
+  background:linear-gradient(140deg,#03211F 0%,#064E3B 40%,#065F46 70%,#059669 100%);
+  color:#fff;padding:80px 24px 60px;text-align:center;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 600px 400px at 20% 50%,rgba(110,231,183,.15) 0%,transparent 70%),
+    radial-gradient(ellipse 400px 300px at 80% 20%,rgba(59,130,246,.10) 0%,transparent 60%);
+}
+.hero-content{position:relative;z-index:1;max-width:860px;margin:0 auto}
+.hero-tag{
+  display:inline-block;padding:6px 16px;border-radius:999px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
+  font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:20px;
+}
+.hero h1{font-size:2.4rem;font-weight:800;line-height:1.25;margin-bottom:16px}
+.hero p{font-size:1.05rem;opacity:.9;max-width:680px;margin:0 auto 28px}
+.hero-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:8px}
+.hero-badges img{height:26px}
+.hero-warn{
+  margin-top:24px;display:inline-flex;align-items:center;gap:8px;
+  background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.4);
+  padding:10px 18px;border-radius:10px;font-size:.85rem;font-weight:600;
+}
+
+/* ═══════════ SECTIONS ═══════════ */
+section{padding:64px 24px;max-width:1120px;margin:0 auto}
+.section-eyebrow{
+  font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--p3);margin-bottom:10px;
+}
+.section-title{font-size:1.7rem;font-weight:800;margin-bottom:14px;color:var(--tx)}
+.section-lead{color:var(--tx2);max-width:760px;margin-bottom:32px;font-size:1rem}
+
+/* ═══════════ CARDS / GRID ═══════════ */
+.grid{display:grid;gap:20px}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+
+.card{
+  background:var(--wh);border:1px solid var(--bd);border-radius:var(--r);
+  padding:22px;box-shadow:var(--sh);transition:transform .15s,box-shadow .15s;
+}
+.card:hover{transform:translateY(-2px);box-shadow:var(--sh2)}
+.card .icon{font-size:1.6rem;margin-bottom:10px;display:block}
+.card h3{font-size:1rem;font-weight:700;margin-bottom:8px;color:var(--tx)}
+.card p{font-size:.88rem;color:var(--mu);line-height:1.6}
+.card code{background:var(--p7);color:var(--p2);padding:1px 6px;border-radius:4px;font-size:.8em}
+
+/* ═══════════ PIPELINE FLOW ═══════════ */
+.flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:20px}
+.flow-step{
+  background:var(--wh);border:1.5px solid var(--p4);border-radius:var(--r2px);
+  padding:14px 18px;font-size:.82rem;font-weight:700;color:var(--p2);
+  text-align:center;min-width:150px;box-shadow:var(--sh);
+}
+.flow-step small{display:block;font-weight:500;color:var(--mu);margin-top:4px;font-size:.75rem}
+.flow-arrow{color:var(--p4);font-size:1.3rem;font-weight:700}
+
+/* ═══════════ TABLE ═══════════ */
+.table-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--bd);box-shadow:var(--sh)}
+table{width:100%;border-collapse:collapse;background:var(--wh);font-size:.87rem}
+th{background:var(--p1);color:#fff;text-align:left;padding:12px 16px;font-weight:700}
+td{padding:12px 16px;border-top:1px solid var(--bd);color:var(--tx2)}
+tr:hover td{background:var(--p7)}
+code.inline{background:#F1F5F9;color:var(--p2);padding:2px 7px;border-radius:5px;font-size:.85em}
+
+/* ═══════════ SAFETY BOX ═══════════ */
+.safety-box{
+  background:linear-gradient(135deg,var(--r2),#fff);border:1.5px solid #FCA5A5;
+  border-radius:var(--r);padding:24px 28px;
+}
+.safety-box h3{color:var(--r3);margin-bottom:10px;font-size:1.05rem}
+.safety-box ul{margin-left:20px;color:var(--tx2);font-size:.9rem;line-height:1.9}
+
+/* ═══════════ CODE BLOCK ═══════════ */
+.codeblock{
+  background:#0B1A17;color:#D1FAE5;border-radius:var(--r2px);
+  padding:16px 18px;font-family:'Cascadia Code','Consolas',monospace;
+  font-size:.82rem;overflow-x:auto;line-height:1.7;
+}
+.codeblock .muted{color:#6B8F82}
+
+/* ═══════════ TEAM ═══════════ */
+.team-list{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:700px){.team-list{grid-template-columns:1fr}}
+.team-list li{
+  background:var(--wh);border:1px solid var(--bd);border-radius:var(--r2px);
+  padding:14px 18px;font-size:.88rem;box-shadow:var(--sh);
+}
+.team-list strong{display:block;color:var(--tx);margin-bottom:2px}
+.team-list span{color:var(--mu);font-size:.82rem}
+
+/* ═══════════ CTA / FOOTER ═══════════ */
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:8px}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;
+  font-weight:700;font-size:.88rem;text-decoration:none;transition:transform .15s,box-shadow .15s;
+}
+.btn-primary{background:var(--p3);color:#fff;box-shadow:0 4px 16px rgba(5,150,105,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(5,150,105,.45)}
+.btn-outline{background:#fff;color:var(--p2);border:1.5px solid var(--p4)}
+.btn-outline:hover{background:var(--p7)}
+
+footer{
+  background:#03211F;color:#9DC3B7;text-align:center;padding:36px 24px;font-size:.82rem;
+}
+footer a{color:#6EE7B7;text-decoration:none}
+
+.section-alt{background:var(--wh)}
+.pill{display:inline-block;background:var(--p7);color:var(--p2);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin:2px 4px 2px 0}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">🏥 Fase 3</span>
+  <div class="nav-sep"></div>
+  <a href="#visao-geral">Visão Geral</a>
+  <a href="#arquitetura">Arquitetura</a>
+  <a href="#requisitos">Requisitos</a>
+  <a href="#seguranca">Segurança</a>
+  <a href="#execucao">Execução</a>
+  <a href="#chat">Chat</a>
+  <a href="#docs">Documentação</a>
+  <a href="#equipe">Equipe</a>
+  <a href="#video">Vídeo</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-content">
+    <span class="hero-tag">Tech Challenge · Fase 3 · FIAP</span>
+    <h1>Assistente Médico Virtual<br>com Fine-tuning, LangChain &amp; LangGraph</h1>
+    <p>
+      Um assistente clínico de apoio à decisão, treinado com protocolos internos
+      do hospital, integrado a uma base de prontuários e orquestrado por um
+      fluxo de decisão automatizado e seguro — sempre sob validação médica humana.
+    </p>
+    <div class="hero-badges">
+      <img src="https://img.shields.io/badge/Python-3.11%2B-blue?logo=python&logoColor=white" alt="Python">
+      <img src="https://img.shields.io/badge/LangChain-RAG%20%2B%20Pipeline-1C3C3C" alt="LangChain">
+      <img src="https://img.shields.io/badge/LangGraph-Fluxo%20Clinico-1C3C3C" alt="LangGraph">
+      <img src="https://img.shields.io/badge/PEFT-LoRA%20Fine--tuning-orange" alt="PEFT">
+      <img src="https://img.shields.io/badge/pytest-26%20passed-0A9EDC?logo=pytest&logoColor=white" alt="pytest">
+    </div>
+    <div class="hero-warn">⚠️ Assistente de apoio à decisão — nunca substitui o julgamento médico</div>
+  </div>
+</div>
+
+<section id="visao-geral">
+  <div class="section-eyebrow">Visão Geral</div>
+  <h2 class="section-title">Do protocolo interno à sugestão auditável</h2>
+  <p class="section-lead">
+    O sistema combina fine-tuning de uma LLM com dados médicos internos (protocolos,
+    FAQs de médicos e modelos de laudo), um pipeline LangChain com RAG sobre esses
+    protocolos e consulta a uma base estruturada de prontuários, e um fluxo de decisão
+    automatizado em LangGraph — tudo isso protegido por guardrails de segurança e
+    logging detalhado de auditoria.
+  </p>
+  <div class="grid grid-4">
+    <div class="card">
+      <span class="icon">🧬</span>
+      <h3>Fine-tuning (LoRA)</h3>
+      <p><strong>distilgpt2</strong> (padrão, ~90s em CPU) ajustado com <code>peft</code> sobre 71 exemplos curados de protocolos, FAQs, laudos e PubMedQA (traduzido para PT-BR). Pipeline também suporta <strong>TinyLlama-1.1B</strong> (arquitetura LLaMA real) via <code>--base-model</code>.</p>
+    </div>
+    <div class="card">
+      <span class="icon">🔎</span>
+      <h3>RAG sobre Protocolos</h3>
+      <p>Recuperação por similaridade (TF-IDF local ou FAISS/LangChain) com citação da fonte exata.</p>
+    </div>
+    <div class="card">
+      <span class="icon">🗂️</span>
+      <h3>Prontuário Estruturado</h3>
+      <p>Base SQLite já anonimizada, consultada para contextualizar cada resposta com dados atuais do paciente.</p>
+    </div>
+    <div class="card">
+      <span class="icon">🕸️</span>
+      <h3>Fluxo LangGraph</h3>
+      <p>Exames pendentes → sugestão de conduta → revisão de segurança → alertas para a equipe.</p>
+    </div>
+  </div>
+</section>
+
+<section id="arquitetura" class="section-alt">
+  <div class="section-eyebrow">Arquitetura</div>
+  <h2 class="section-title">Pipeline ponta a ponta</h2>
+  <p class="section-lead">
+    Cinco camadas independentes e testáveis isoladamente: dados/curadoria, fine-tuning,
+    RAG + prontuário, orquestração (LangChain + LangGraph) e segurança/auditoria.
+    Diagrama completo (Mermaid) em <code>docs/architecture.md</code>.
+  </p>
+  <div class="flow">
+    <div class="flow-step">Dados Brutos<small>protocolos, FAQs, laudos, prontuários</small></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">Anonimização<br>+ Curadoria<small>anonymize.py / dataset_builder.py</small></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">Fine-tuning LoRA<small>train.py + evaluate.py</small></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">MedicalAssistant<small>RAG + prontuário + LLM</small></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">Guardrails +<br>Explainability<small>sanitização, citações</small></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">Audit Log<small>logs/audit_log.jsonl</small></div>
+  </div>
+
+  <h3 style="margin-top:44px;margin-bottom:14px;font-size:1.1rem;color:var(--tx)">Nós do fluxo clínico (LangGraph)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Nó</th><th>Responsabilidade</th><th>Saída</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">intake</code></td><td>Busca o paciente na base de prontuários</td><td>diagnóstico, status</td></tr>
+        <tr><td><code class="inline">verificar_exames_pendentes</code></td><td>Consulta exames pendentes do paciente</td><td>lista de exames</td></tr>
+        <tr><td><code class="inline">consultar_protocolo</code></td><td>RAG sobre os protocolos relevantes ao diagnóstico</td><td>trechos + fontes</td></tr>
+        <tr><td><code class="inline">sugerir_conduta</code></td><td>Gera rascunho de próximos passos via LLM</td><td>sugestão (rascunho)</td></tr>
+        <tr><td><code class="inline">revisao_seguranca</code></td><td>Sanitiza linguagem prescritiva, adiciona aviso obrigatório</td><td>flags + texto final</td></tr>
+        <tr><td><code class="inline">emitir_alertas</code></td><td>Gera alertas para a equipe médica (alto risco, exames pendentes)</td><td>alertas</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="requisitos">
+  <div class="section-eyebrow">Requisitos Atendidos</div>
+  <h2 class="section-title">Entregas técnicas do desafio</h2>
+  <div class="grid grid-2">
+    <div class="card">
+      <span class="icon">1️⃣</span>
+      <h3>Fine-tuning com dados médicos internos</h3>
+      <p>Protocolos, FAQs, modelos de laudo/receita e uma amostra real do <strong>PubMedQA</strong> → dataset curado de 71 exemplos (<code>finetune_dataset.jsonl</code>) → fine-tuning LoRA/PEFT.</p>
+    </div>
+    <div class="card">
+      <span class="icon">2️⃣</span>
+      <h3>Assistente com LangChain</h3>
+      <p>Pipeline integrando a LLM customizada, consulta à base estruturada de prontuários e contextualização com dados atualizados do paciente.</p>
+    </div>
+    <div class="card">
+      <span class="icon">3️⃣</span>
+      <h3>Segurança e validação</h3>
+      <p>Limites de atuação (sem prescrição direta), logging detalhado e explainability com indicação da fonte.</p>
+    </div>
+    <div class="card">
+      <span class="icon">4️⃣</span>
+      <h3>Organização do código</h3>
+      <p>Projeto modularizado em Python (<code>src/</code>), CLI unificada, 26 testes automatizados e README completo.</p>
+    </div>
+  </div>
+</section>
+
+<section id="seguranca" class="section-alt">
+  <div class="section-eyebrow">Segurança</div>
+  <h2 class="section-title">Limites de atuação do assistente</h2>
+
+  <div class="safety-box" style="background:linear-gradient(135deg,var(--a2),#fff);border-color:#FCD34D;margin-bottom:20px">
+    <h3 style="color:var(--a3)">🤖 Isto não é um "Claude" ou "ChatGPT" da vida</h3>
+    <ul>
+      <li>Por padrão, o assistente <strong>não é um modelo de linguagem genérico</strong> capaz de responder qualquer coisa — ele só <strong>consulta a base curada</strong> de protocolos internos e FAQs do hospital.</li>
+      <li>Se a pergunta não casar com essa base, ele <strong>se recusa a responder</strong> em vez de inventar (alucinar) uma conduta clínica plausível-mas-errada.</li>
+      <li>Isso é proposital: num contexto médico é muito mais seguro dizer <em>"não tenho essa informação, procure um médico"</em> do que "chutar" uma resposta sem fonte.</li>
+      <li>Um LLM genérico respondendo livremente sobre condutas médicas, sem citar fonte, é exatamente o tipo de risco que os guardrails deste projeto existem para evitar.</li>
+    </ul>
+  </div>
+
+  <div class="safety-box">
+    <h3>⚠️ O assistente é apoio à decisão — não é o médico</h3>
+    <ul>
+      <li><strong>Nunca prescreve diretamente</strong> — linguagem de ordem médica (ex.: "administre", "injete") é automaticamente reescrita como sugestão.</li>
+      <li>Toda resposta recebe o aviso obrigatório: <em>"requer validação de um médico responsável antes da execução"</em>.</li>
+      <li>Perguntas fora do escopo seguro são <strong>bloqueadas</strong> antes de qualquer geração de resposta.</li>
+      <li><strong>Logging detalhado</strong>: cada interação e cada nó do fluxo gera um evento auditável (<code>event_id</code>, timestamp, fontes, flags).</li>
+      <li><strong>Explainability</strong>: toda resposta cita o protocolo e a seção exata usados como fonte.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="execucao">
+  <div class="section-eyebrow">Execução</div>
+  <h2 class="section-title">Como rodar o projeto</h2>
+  <p class="section-lead">Com apenas <code>requirements.txt</code> instalado, todo o projeto roda — RAG, assistente, fluxo clínico e os 26 testes — usando fallbacks leves, sem GPU e sem chave de API.</p>
+  <div class="codeblock">
+<span class="muted"># 1. instalar dependências mínimas</span>
+pip install -r requirements.txt
+
+<span class="muted"># 2. anonimizar prontuários e montar dataset de fine-tuning</span>
+python -m src.main anonymize
+python -m src.main build-dataset
+
+<span class="muted"># 3. perguntar ao assistente (com contexto de paciente)</span>
+python -m src.main ask "Quando iniciar antibiotico em suspeita de sepse?" --patient-id PAC-0004
+
+<span class="muted"># 4. executar o fluxo clínico automatizado (LangGraph)</span>
+python -m src.main flow --patient-id PAC-0006
+
+<span class="muted"># 5. consultar logs de auditoria</span>
+python -m src.main logs --n 10
+
+<span class="muted"># 6. rodar os testes</span>
+python -m pytest -q   <span class="muted"># 26 passed</span>
+  </div>
+</section>
+
+<section id="chat" class="section-alt">
+  <div class="section-eyebrow">Interface de Chat</div>
+  <h2 class="section-title">A forma mais fácil de usar: chat no navegador</h2>
+  <p class="section-lead">
+    Além da CLI, o projeto tem uma interface de chat web completa, com backend
+    próprio feito só com a biblioteca padrão do Python (sem Flask/FastAPI) e
+    front-end estático — tudo sobe com um duplo clique.
+  </p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <span class="icon">🖱️</span>
+      <h3>1. Duplo clique em <code>iniciar_assistente.bat</code></h3>
+      <p>Confere se o <code>.venv</code> existe, abre o backend numa janela de terminal separada
+      (<code>python -m src.webapp.server</code>, porta <code>8765</code>) e abre o navegador
+      automaticamente em <code>http://127.0.0.1:8765</code>.</p>
+    </div>
+    <div class="card">
+      <span class="icon">💬</span>
+      <h3>2. Converse com o assistente</h3>
+      <p>Digite a pergunta clínica no chat e receba a resposta com as fontes do
+      protocolo citadas — igual ao comando <code>ask</code> da CLI, só que visual.</p>
+    </div>
+    <div class="card">
+      <span class="icon">🧑‍⚕️</span>
+      <h3>3. Selecione um paciente</h3>
+      <p>Escolha <code>PAC-0001</code> a <code>PAC-0006</code> no menu lateral para
+      contextualizar as respostas com o prontuário (idade, diagnóstico, exames, alergias).</p>
+    </div>
+    <div class="card">
+      <span class="icon">⚡</span>
+      <h3>4. Perguntas rápidas + fluxo automatizado</h3>
+      <p>Chips na lateral disparam perguntas já validadas — inclusive uma marcada com ⚠️
+      que demonstra o bloqueio dos guardrails ao vivo. O botão "Rodar fluxo automatizado"
+      executa o LangGraph completo para o paciente selecionado, direto no chat.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:36px;margin-bottom:14px;font-size:1.05rem;color:var(--tx)">Endpoints do backend (<code>src/webapp/server.py</code>)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Endpoint</th><th>Método</th><th>Descrição</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inline">/</code></td><td>GET</td><td>Interface de chat (<code>static/index.html</code>)</td></tr>
+        <tr><td><code class="inline">/api/patients</code></td><td>GET</td><td>Lista de pacientes de exemplo (para o seletor)</td></tr>
+        <tr><td><code class="inline">/api/ask</code></td><td>POST</td><td><code>{question, patient_id?}</code> → resposta do assistente</td></tr>
+        <tr><td><code class="inline">/api/flow</code></td><td>POST</td><td><code>{patient_id}</code> → executa o fluxo clínico automatizado</td></tr>
+        <tr><td><code class="inline">/api/logs?n=10</code></td><td>GET</td><td>Últimos eventos de auditoria</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="docs">
+  <div class="section-eyebrow">Documentação</div>
+  <h2 class="section-title">Onde encontrar cada entregável</h2>
+  <div class="grid grid-2">
+    <div class="card"><span class="icon">📄</span><h3>Relatório Técnico</h3><p><code>reports/final_report.md</code> — fine-tuning, avaliação, arquitetura do assistente.</p></div>
+    <div class="card"><span class="icon">🗺️</span><h3>Arquitetura</h3><p><code>docs/architecture.md</code> — diagrama Mermaid completo e detalhamento do fluxo.</p></div>
+    <div class="card"><span class="icon">🎬</span><h3>Roteiro do Vídeo</h3><p><code>docs/video_script.md</code> — o que mostrar e falar em cada bloco (≤15 min).</p></div>
+    <div class="card"><span class="icon">🎥</span><h3>Como Gravar</h3><p><code>docs/COMO_GRAVAR_VIDEO.md</code> — ferramentas, passo a passo e checklist de publicação.</p></div>
+  </div>
+</section>
+
+<section id="equipe">
+  <div class="section-eyebrow">Equipe</div>
+  <h2 class="section-title">Grupo 2026</h2>
+  <ul class="team-list">
+    <li><strong>Wilson Lima da Silva</strong><span>wilson.slima@gmail.com</span></li>
+    <li><strong>Gustavo Lopes da Silva</strong><span>gustavo_lsilva@hotmail.com</span></li>
+    <li><strong>Felipe Soeiro Lopes</strong><span>felipesoeiro.contato@outlook.com.br</span></li>
+    <li><strong>Vinicius Tavares Sousa da Silva</strong><span>viniciustavares2014@gmail.com</span></li>
+  </ul>
+</section>
+
+<section id="video" class="section-alt" style="text-align:center">
+  <div class="section-eyebrow">Demonstração</div>
+  <h2 class="section-title">Vídeo do Projeto</h2>
+  <p class="section-lead" style="margin-left:auto;margin-right:auto;text-align:center">
+    Vídeo de até 15 minutos demonstrando o treinamento da LLM, o fluxo automatizado,
+    respostas clínicas contextualizadas e os logs de auditoria.
+  </p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://youtu.be/SEU_LINK_AQUI">▶ Assistir no YouTube</a>
+    <a class="btn btn-outline" href="README.md">📘 Ver README completo</a>
+  </div>
+</section>
+
+<footer>
+  <p>Tech Challenge Fase 3 · Pós-Graduação IA Para Desenvolvedores · FIAP · 2026</p>
+  <p style="margin-top:6px">Projeto acadêmico com dados sintéticos — não utilizar em ambiente clínico real sem validação institucional e aprovação ética.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+nome_completo,cpf,telefone,email,endereco,paciente_id,idade,sexo,diagnostico,alergias,medicacoes_em_uso,convenio
+Maria Aparecida Souza,123.456.789-01,(11) 98765-4321,maria.souza@email.com,"Rua das Flores, 120 - São Paulo/SP",PAC-0001,67,F,Insuficiencia cardiaca congestiva,Dipirona,"Furosemida 40mg; Losartana 50mg",Amil
+João Pedro Lima,234.567.890-12,(21) 99876-5432,joao.lima@email.com,"Av. Brasil, 900 - Rio de Janeiro/RJ",PAC-0002,54,M,Diabetes mellitus tipo 2,Nenhuma conhecida,"Metformina 850mg; Insulina NPH",Bradesco Saude
+Ana Beatriz Ferreira,345.678.901-23,(31) 98123-4567,ana.ferreira@email.com,"Rua Minas Gerais, 45 - Belo Horizonte/MG",PAC-0003,29,F,Dor toracica atipica em investigacao,Penicilina,Nenhuma,SulAmerica
+Carlos Eduardo Santos,456.789.012-34,(41) 99234-5678,carlos.santos@email.com,"Rua XV de Novembro, 300 - Curitiba/PR",PAC-0004,71,M,Sepse de foco pulmonar,Nenhuma conhecida,"Enalapril 10mg",Unimed
+Fernanda Costa Oliveira,567.890.123-45,(51) 98345-6789,fernanda.oliveira@email.com,"Av. Ipiranga, 500 - Porto Alegre/RS",PAC-0005,45,F,Cetoacidose diabetica,Sulfa,"Insulina Regular",Particular
+Ricardo Alves Pereira,678.901.234-56,(61) 99456-7890,ricardo.pereira@email.com,"SQN 210 Bloco B - Brasilia/DF",PAC-0006,60,M,Infarto agudo do miocardio com supra de ST,Nenhuma conhecida,"AAS 100mg; Atorvastatina 40mg",Amil

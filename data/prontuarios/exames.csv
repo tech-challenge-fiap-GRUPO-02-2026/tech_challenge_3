@@ -1,0 +1,14 @@
+paciente_id,exame,status,resultado,data_solicitacao
+PAC-0001,BNP,concluido,"Elevado (1200 pg/mL)",2026-08-10
+PAC-0001,Ecocardiograma,pendente,,2026-08-11
+PAC-0002,Hemoglobina glicada,concluido,"9.2%",2026-08-09
+PAC-0002,Funcao renal (creatinina),pendente,,2026-08-12
+PAC-0003,Troponina 0h,concluido,"Negativa",2026-08-14
+PAC-0003,Troponina 1h,pendente,,2026-08-14
+PAC-0003,ECG 12 derivacoes,concluido,"Sem alteracoes agudas",2026-08-14
+PAC-0004,Lactato serico,concluido,"3.8 mmol/L",2026-08-13
+PAC-0004,Hemoculturas,pendente,,2026-08-13
+PAC-0005,Gasometria arterial,concluido,"pH 7.21, cetonemia positiva",2026-08-15
+PAC-0005,Eletrolitos (potassio),pendente,,2026-08-15
+PAC-0006,ECG 12 derivacoes,concluido,"Supradesnivelamento de ST em parede anterior",2026-08-15
+PAC-0006,Troponina,pendente,,2026-08-15

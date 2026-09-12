@@ -75,6 +75,11 @@ def run_training(cfg: FineTuneConfig, max_steps: int | None = None) -> None:
     dataset = Dataset.from_dict({"text": texts}).map(tokenize, batched=True)
 
     model = AutoModelForCausalLM.from_pretrained(cfg.base_model)
+    if torch.cuda.is_available():
+        # gradient_checkpointing (ativado abaixo) é incompatível com o cache
+        # de KV durante o treino; desativa para evitar conflito/warning.
+        model.config.use_cache = False
+        model.gradient_checkpointing_enable()
     lora_config = LoraConfig(
         r=cfg.lora_r,
         lora_alpha=cfg.lora_alpha,
@@ -86,6 +91,17 @@ def run_training(cfg: FineTuneConfig, max_steps: int | None = None) -> None:
     model.print_trainable_parameters()
 
     cfg.output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Detecção de acelerador agnóstica entre NVIDIA (CUDA) e AMD (ROCm):
+    # ambos os builds do PyTorch expõem a API `torch.cuda`. Em CPU, tudo
+    # cai para os padrões (sem fp16/bf16, sem gradient checkpointing).
+    use_gpu = torch.cuda.is_available()
+    
+    # bf16 é suportado em GPUs recentes (NVIDIA Ampere+ e AMD CDNA); quando
+    # não houver suporte, usa fp16. Economiza VRAM (importante em placas de
+    # 6 GB) e acelera o treino.
+    bf16_ok = use_gpu and torch.cuda.is_bf16_supported()
+
     training_args = TrainingArguments(
         output_dir=str(cfg.output_dir),
         num_train_epochs=cfg.num_train_epochs,
@@ -96,7 +112,19 @@ def run_training(cfg: FineTuneConfig, max_steps: int | None = None) -> None:
         save_strategy="no",
         report_to=[],
         seed=cfg.seed,
+        bf16=bf16_ok,
+        fp16=use_gpu and not bf16_ok,
+        gradient_checkpointing=use_gpu,
+        optim="adamw_torch",
     )
+    if use_gpu:
+        print(
+            f"GPU detectada: {torch.cuda.get_device_name(0)} | "
+            f"precisão: {'bf16' if bf16_ok else 'fp16'} | "
+            f"gradient_checkpointing: on"
+        )
+    else:
+        print("Nenhuma GPU detectada — treinando em CPU (mais lento).")
 
     collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
     trainer = Trainer(
@@ -131,11 +159,18 @@ def main() -> None:
     parser.add_argument("--max-steps", type=int, default=None, help="Limita passos de treino (demo rápida)")
     args = parser.parse_args()
 
-    cfg = FineTuneConfig()
+    # Importante: o base_model precisa ser passado na CONSTRUÇÃO da config,
+    # pois é o __post_init__ que deriva os target_modules do LoRA a partir
+    # da arquitetura (GPT-2 usa `c_attn`; LLaMA/Mistral usam
+    # `q_proj/k_proj/v_proj/o_proj`). Setar cfg.base_model depois de criada
+    # não recalcula os módulos e faz o LoRA falhar em modelos LLaMA.
+    cfg_kwargs = {}
     if args.base_model:
-        cfg.base_model = args.base_model
+        cfg_kwargs["base_model"] = args.base_model
     if args.epochs:
-        cfg.num_train_epochs = args.epochs
+        cfg_kwargs["num_train_epochs"] = args.epochs
+
+    cfg = FineTuneConfig(**cfg_kwargs)
 
     run_training(cfg, max_steps=args.max_steps)
 

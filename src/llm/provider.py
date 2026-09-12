@@ -127,8 +127,20 @@ class LocalFineTunedProvider:
         from peft import AutoPeftModelForCausalLM
         from transformers import AutoTokenizer, pipeline
 
-        model = AutoPeftModelForCausalLM.from_pretrained(self.model_dir)
+        # Inferência GPU-aware e agnóstica entre NVIDIA (CUDA) e AMD (ROCm):
+        # ambos expõem `torch.cuda`. Sem GPU, cai para CPU automaticamente.
+        import torch
+
+        if torch.cuda.is_available():
+            dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
+            model = AutoPeftModelForCausalLM.from_pretrained(
+                self.model_dir, torch_dtype=dtype, device_map="auto"
+            )
+        else:
+            model = AutoPeftModelForCausalLM.from_pretrained(self.model_dir)
         tokenizer = AutoTokenizer.from_pretrained(self.model_dir)
+        # Quando device_map="auto" posiciona o modelo, o pipeline herda o
+        # device do modelo; sem GPU, roda em CPU.
         self._pipeline = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
     def generate(self, prompt: str, context: str = "") -> str:

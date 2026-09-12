@@ -361,6 +361,85 @@ python -m src.main finetune --max-steps 30
 python -m src.main evaluate
 ```
 
+---
+
+## 🖥️ Treinamento em GPU (LLaMA) — do zero, flexível NVIDIA/AMD
+
+Fluxo completo para treinar um modelo **LLaMA** na GPU a partir do clone
+do repositório. O código de treino (`src/finetuning/train.py`) e a
+inferência (`src/llm/provider.py`) são **GPU-aware e agnósticos**: detectam
+a GPU via `torch.cuda.is_available()` (verdadeiro tanto em **CUDA/NVIDIA**
+quanto em **ROCm/AMD**, pois o PyTorch ROCm expõe a mesma API `torch.cuda`),
+ativam `bf16`/`fp16` e `gradient_checkpointing` automaticamente, e caem para
+CPU sem GPU. **O que decide o backend é apenas qual build do PyTorch você
+instala** — o mesmo código roda nos dois.
+
+### Pré-requisitos de GPU
+
+| Hardware | Driver/stack necessário no sistema |
+|----------|-------------------------------------|
+| NVIDIA | Driver NVIDIA. No Fedora: `sudo dnf install akmod-nvidia xorg-x11-drv-nvidia-cuda` |
+| AMD | Stack ROCm/amdgpu — ver [rocm.docs.amd.com](https://rocm.docs.amd.com/projects/install-on-linux/) |
+
+> Os wheels do PyTorch já trazem as libs CUDA/ROCm, mas o **driver** da GPU
+> precisa estar instalado no sistema operacional.
+
+### Passo a passo
+
+```bash
+# 1. Clonar e entrar no projeto
+git clone <URL_DO_REPOSITORIO>
+cd tech_challenge_3
+
+# 2. Criar e ativar o virtualenv
+python3 -m venv venv
+source venv/bin/activate
+
+# 3. Dependências base (assistente, RAG, fluxo, testes)
+pip install -r requirements.txt
+
+# 4. PyTorch + libs de treino na GPU — escolha o script do seu hardware.
+#    Cada script ativa o venv, instala a build correta do PyTorch,
+#    instala transformers/peft/datasets/accelerate e verifica a GPU.
+./scripts/install_torch_nvidia.sh      # NVIDIA (CUDA)
+# ./scripts/install_torch_amd.sh       # AMD (ROCm)
+
+# 5. (Opcional) Regenerar o dataset de fine-tuning
+python -m src.main anonymize
+python -m src.main build-dataset
+
+# 6. Treinar LLaMA na GPU (TinyLlama 1.1B — arquitetura LLaMA aberta)
+python -m src.finetuning.train --base-model TinyLlama/TinyLlama-1.1B-Chat-v1.0 --epochs 3
+
+# 7. Avaliar o modelo treinado
+python -m src.main evaluate
+
+# 8. Usar o modelo (auto nunca escolhe o fine-tuned; selecione explicitamente)
+python -m src.main ask "Quando iniciar antibiotico em suspeita de sepse?" --provider local_finetuned
+```
+
+Para o **Llama 3 oficial da Meta** (exige aceitar a licença no Hugging Face
+e um token):
+
+```bash
+export HF_TOKEN=seu_token_aqui
+python -m src.finetuning.train --base-model meta-llama/Llama-3.2-1B --epochs 3
+```
+
+### Scripts de instalação do PyTorch
+
+Ambos aceitam variáveis de ambiente opcionais, sem editar o arquivo:
+
+```bash
+CUDA_CHANNEL=cu124 ./scripts/install_torch_nvidia.sh   # outra versão de CUDA (padrão: cu121)
+ROCM_CHANNEL=rocm6.2 ./scripts/install_torch_amd.sh    # outra versão de ROCm (padrão: rocm6.1)
+VENV_DIR=/outro/venv ./scripts/install_torch_nvidia.sh # virtualenv em outro caminho
+```
+
+> **VRAM:** modelos LLaMA 1.1B (TinyLlama) cabem em ~6 GB com as
+> otimizações já ativas. Modelos maiores exigiriam quantização (ex.:
+> 4-bit via bitsandbytes), não configurada por padrão neste projeto.
+
 ### 4. 💬 Perguntar ao assistente
 
 ```bash

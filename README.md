@@ -64,11 +64,15 @@ interface:
 > oficial da Meta) — o código já ajusta automaticamente os módulos do LoRA
 > para a arquitetura certa (`q_proj/k_proj/v_proj/o_proj`, ver
 > `default_lora_target_modules()` em `src/finetuning/config.py`).
-> Tentamos rodar esse treino nesta máquina (sem GPU) e **cancelamos após
-> quase 3h de CPU sem completar sequer 1 dos 10 passos** — inviável como
-> padrão do projeto, e por isso não está incluído como resultado
-> concluído aqui. Fica documentado como capacidade suportada e testável
-> por quem tiver GPU disponível. Para o Llama 3 oficial da Meta:
+> Tentamos rodar esse treino nesta máquina (sem GPU, só CPU) e, depois de
+> **mais de 6 horas rodando sem completar sequer 1 dos 10 passos
+> configurados, o computador desligou sozinho** (sobrecarga de
+> processamento) — inviável como padrão do projeto, e por isso não está
+> incluído como resultado concluído aqui; a equipe seguiu com o
+> `distilgpt2` como modelo padrão. Fica documentado como capacidade
+> suportada e testável por quem tiver GPU disponível — inclusive com os
+> scripts de instalação do PyTorch para NVIDIA/AMD já prontos (ver seção
+> abaixo). Para o Llama 3 oficial da Meta:
 > `--base-model meta-llama/Llama-3.2-1B` com `HF_TOKEN` configurado
 > (exige aceitar a licença em huggingface.co/meta-llama).
 
@@ -290,9 +294,7 @@ tech-challenge-fase3/
 │   └── prontuarios/             # Base estruturada usada em runtime (pacientes.csv, exames.csv)
 │
 ├── docs/
-│   ├── architecture.md         # Diagrama Mermaid + detalhamento do fluxo
-│   ├── video_script.md         # Roteiro do vídeo de demonstração
-│   └── COMO_GRAVAR_VIDEO.md    # Guia prático de gravação e publicação
+│   └── architecture.md         # Diagrama Mermaid + detalhamento do fluxo
 │
 ├── reports/
 │   └── final_report.md         # Relatório técnico consolidado
@@ -525,17 +527,12 @@ Detalhes completos em [`docs/architecture.md`](docs/architecture.md) e
 |---------|----------|
 | `reports/final_report.md` | Relatório técnico consolidado (fine-tuning, assistente, avaliação) |
 | `docs/architecture.md` | Diagrama de arquitetura e detalhamento do fluxo LangChain/LangGraph |
-| `docs/video_script.md` | Roteiro do vídeo de demonstração (o que falar/mostrar) |
-| `docs/COMO_GRAVAR_VIDEO.md` | Guia prático de gravação, edição e publicação do vídeo |
 
 ---
 
 ## 🎬 Vídeo Demonstração
 
 [![Assistir no YouTube](https://img.shields.io/badge/YouTube-Assistir%20Demo-FF0000?logo=youtube&logoColor=white)](https://youtu.be/SEU_LINK_AQUI)
-
-> Substituir pelo link definitivo após a gravação — ver
-> [`docs/COMO_GRAVAR_VIDEO.md`](docs/COMO_GRAVAR_VIDEO.md).
 
 ---
 

@@ -51,6 +51,13 @@ nav a{
 nav a:hover{background:var(--p7);color:var(--p2)}
 nav .nav-brand{font-weight:800;font-size:.9rem;color:var(--p2);margin-right:12px;white-space:nowrap}
 nav .nav-sep{width:1px;height:20px;background:var(--bd);flex-shrink:0;margin:0 8px}
+nav .nav-gh{
+  margin-left:auto;flex-shrink:0;
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--p1);color:#fff!important;
+  padding:8px 16px;border-radius:8px;font-weight:700;
+}
+nav .nav-gh:hover{background:var(--p2);color:#fff!important}
 
 /* ═══════════ HERO ═══════════ */
 .hero{
@@ -79,6 +86,29 @@ nav .nav-sep{width:1px;height:20px;background:var(--bd);flex-shrink:0;margin:0 8
   background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.4);
   padding:10px 18px;border-radius:10px;font-size:.85rem;font-weight:600;
 }
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:28px}
+.hero-cta .btn-primary{box-shadow:0 4px 20px rgba(0,0,0,.25)}
+.hero-cta .btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;
+  font-weight:700;font-size:.88rem;text-decoration:none;color:#fff;
+  background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.35);
+  transition:transform .15s,background .15s;
+}
+.hero-cta .btn-ghost:hover{background:rgba(255,255,255,.18);transform:translateY(-2px)}
+
+/* ═══════════ STATS STRIP ═══════════ */
+.stats-strip{
+  background:var(--wh);border-bottom:1px solid var(--bd);
+  display:flex;flex-wrap:wrap;justify-content:center;gap:0;
+}
+.stat{
+  flex:1 1 160px;text-align:center;padding:26px 16px;
+  border-right:1px solid var(--bd);
+}
+.stat:last-child{border-right:none}
+.stat .num{font-size:1.7rem;font-weight:800;color:var(--p2);line-height:1.2}
+.stat .lbl{font-size:.76rem;color:var(--mu);font-weight:600;margin-top:2px}
+
 
 /* ═══════════ SECTIONS ═══════════ */
 section{padding:64px 24px;max-width:1120px;margin:0 auto}
@@ -98,9 +128,12 @@ section{padding:64px 24px;max-width:1120px;margin:0 auto}
 
 .card{
   background:var(--wh);border:1px solid var(--bd);border-radius:var(--r);
-  padding:22px;box-shadow:var(--sh);transition:transform .15s,box-shadow .15s;
+  padding:22px;box-shadow:var(--sh);transition:transform .15s,box-shadow .15s,border-color .15s;
+  display:block;text-decoration:none;color:inherit;
 }
 .card:hover{transform:translateY(-2px);box-shadow:var(--sh2)}
+a.card:hover{border-color:var(--p4)}
+a.card:hover h3{color:var(--p2)}
 .card .icon{font-size:1.6rem;margin-bottom:10px;display:block}
 .card h3{font-size:1rem;font-weight:700;margin-bottom:8px;color:var(--tx)}
 .card p{font-size:.88rem;color:var(--mu);line-height:1.6}
@@ -180,10 +213,12 @@ footer a{color:#6EE7B7;text-decoration:none}
   <a href="#requisitos">Requisitos</a>
   <a href="#seguranca">Segurança</a>
   <a href="#execucao">Execução</a>
+  <a href="#gpu">GPU</a>
   <a href="#chat">Chat</a>
   <a href="#docs">Documentação</a>
   <a href="#equipe">Equipe</a>
   <a href="#video">Vídeo</a>
+  <a class="nav-gh" href="https://github.com/tech-challenge-fiap-GRUPO-02-2026/tech_challenge_3" target="_blank" rel="noopener">🐙 GitHub</a>
 </nav>
 
 <div class="hero">
@@ -201,9 +236,22 @@ footer a{color:#6EE7B7;text-decoration:none}
       <img src="https://img.shields.io/badge/LangGraph-Fluxo%20Clinico-1C3C3C" alt="LangGraph">
       <img src="https://img.shields.io/badge/PEFT-LoRA%20Fine--tuning-orange" alt="PEFT">
       <img src="https://img.shields.io/badge/pytest-26%20passed-0A9EDC?logo=pytest&logoColor=white" alt="pytest">
+      <img src="https://img.shields.io/badge/GPU-CUDA%20%7C%20ROCm-76B900" alt="GPU CUDA ROCm">
     </div>
     <div class="hero-warn">⚠️ Assistente de apoio à decisão — nunca substitui o julgamento médico</div>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="https://github.com/tech-challenge-fiap-GRUPO-02-2026/tech_challenge_3" target="_blank" rel="noopener">🐙 Ver Repositório no GitHub</a>
+      <a class="btn-ghost" href="#video">▶ Ver Demonstração</a>
+    </div>
   </div>
+</div>
+
+<div class="stats-strip">
+  <div class="stat"><div class="num">71</div><div class="lbl">Exemplos curados</div></div>
+  <div class="stat"><div class="num">26</div><div class="lbl">Testes automatizados</div></div>
+  <div class="stat"><div class="num">6</div><div class="lbl">Nós no fluxo clínico</div></div>
+  <div class="stat"><div class="num">3</div><div class="lbl">Providers de LLM</div></div>
+  <div class="stat"><div class="num">6</div><div class="lbl">Pacientes de exemplo</div></div>
 </div>
 
 <section id="visao-geral">
@@ -357,6 +405,68 @@ python -m pytest -q   <span class="muted"># 26 passed</span>
   </div>
 </section>
 
+<section id="gpu" class="section-alt">
+  <div class="section-eyebrow">Treinamento em GPU</div>
+  <h2 class="section-title">Fine-tuning de um LLaMA real — NVIDIA ou AMD, sem editar código</h2>
+  <p class="section-lead">
+    O código de treino (<code>src/finetuning/train.py</code>) e o de inferência
+    (<code>src/llm/provider.py</code>) são <strong>GPU-aware e agnósticos de fabricante</strong>:
+    detectam a GPU via <code>torch.cuda.is_available()</code> — verdadeiro tanto em
+    <strong>CUDA/NVIDIA</strong> quanto em <strong>ROCm/AMD</strong>, já que o PyTorch ROCm expõe
+    a mesma API <code>torch.cuda</code> — ativam <code>bf16</code>/<code>fp16</code> e
+    <code>gradient_checkpointing</code> automaticamente, e caem para CPU sem GPU disponível.
+    O que decide o backend é só qual build do PyTorch é instalada — o mesmo código roda nos dois.
+  </p>
+
+  <div class="table-wrap" style="margin-bottom:28px">
+    <table>
+      <thead><tr><th>Hardware</th><th>Driver/stack necessário no sistema</th></tr></thead>
+      <tbody>
+        <tr><td>NVIDIA</td><td>Driver NVIDIA (ex.: Fedora → <code class="inline">sudo dnf install akmod-nvidia xorg-x11-drv-nvidia-cuda</code>)</td></tr>
+        <tr><td>AMD</td><td>Stack ROCm/amdgpu — ver <a href="https://rocm.docs.amd.com/projects/install-on-linux/" target="_blank" rel="noopener">rocm.docs.amd.com</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid grid-2" style="margin-bottom:28px">
+    <div class="card">
+      <span class="icon">🟩</span>
+      <h3>NVIDIA (CUDA)</h3>
+      <p><code>./scripts/install_torch_nvidia.sh</code> ativa o venv, instala a build CUDA correta do PyTorch e as libs de treino (<code>transformers</code>, <code>peft</code>, <code>datasets</code>, <code>accelerate</code>), e verifica a GPU.</p>
+    </div>
+    <div class="card">
+      <span class="icon">🟥</span>
+      <h3>AMD (ROCm)</h3>
+      <p><code>./scripts/install_torch_amd.sh</code> faz o mesmo para a build ROCm — mesmo código de treino, sem alterações.</p>
+    </div>
+  </div>
+
+  <div class="codeblock">
+<span class="muted"># 1. dependências base (assistente, RAG, fluxo, testes)</span>
+pip install -r requirements.txt
+
+<span class="muted"># 2. PyTorch + libs de treino na GPU — escolha o script do seu hardware</span>
+./scripts/install_torch_nvidia.sh      <span class="muted"># NVIDIA (CUDA)</span>
+<span class="muted"># ./scripts/install_torch_amd.sh       # AMD (ROCm)</span>
+
+<span class="muted"># 3. treinar um LLaMA real na GPU (TinyLlama 1.1B — arquitetura LLaMA aberta)</span>
+python -m src.finetuning.train --base-model TinyLlama/TinyLlama-1.1B-Chat-v1.0 --epochs 3
+
+<span class="muted"># 4. avaliar e usar o modelo treinado (auto nunca escolhe o fine-tuned sozinho)</span>
+python -m src.main evaluate
+python -m src.main ask "Quando iniciar antibiotico em suspeita de sepse?" --provider local_finetuned
+  </div>
+
+  <p class="section-lead" style="margin-top:24px;margin-bottom:0">
+    <strong>VRAM:</strong> o TinyLlama-1.1B cabe em ~6 GB com as otimizações já ativas.
+    Variáveis opcionais permitem trocar a versão do CUDA/ROCm ou o diretório do venv sem editar
+    os scripts (<code>CUDA_CHANNEL=cu124</code>, <code>ROCM_CHANNEL=rocm6.2</code>,
+    <code>VENV_DIR=/outro/venv</code>). Para o <strong>Llama 3 oficial da Meta</strong>
+    (<code>meta-llama/Llama-3.2-1B</code>), é preciso aceitar a licença no Hugging Face e
+    configurar <code>HF_TOKEN</code>.
+  </p>
+</section>
+
 <section id="chat" class="section-alt">
   <div class="section-eyebrow">Interface de Chat</div>
   <h2 class="section-title">A forma mais fácil de usar: chat no navegador</h2>
@@ -414,10 +524,10 @@ python -m pytest -q   <span class="muted"># 26 passed</span>
   <div class="section-eyebrow">Documentação</div>
   <h2 class="section-title">Onde encontrar cada entregável</h2>
   <div class="grid grid-2">
-    <div class="card"><span class="icon">📄</span><h3>Relatório Técnico</h3><p><code>reports/final_report.md</code> — fine-tuning, avaliação, arquitetura do assistente.</p></div>
-    <div class="card"><span class="icon">🗺️</span><h3>Arquitetura</h3><p><code>docs/architecture.md</code> — diagrama Mermaid completo e detalhamento do fluxo.</p></div>
-    <div class="card"><span class="icon">🎬</span><h3>Roteiro do Vídeo</h3><p><code>docs/video_script.md</code> — o que mostrar e falar em cada bloco (≤15 min).</p></div>
-    <div class="card"><span class="icon">🎥</span><h3>Como Gravar</h3><p><code>docs/COMO_GRAVAR_VIDEO.md</code> — ferramentas, passo a passo e checklist de publicação.</p></div>
+    <a class="card" href="docs/relatorio_tecnico_challenge3.pdf" target="_blank" rel="noopener"><span class="icon">📕</span><h3>Relatório Técnico (PDF)</h3><p><code>docs/relatorio_tecnico_challenge3.pdf</code> — relatório acadêmico completo: fundamentação, implementação, avaliação e resultados.</p></a>
+    <a class="card" href="https://github.com/tech-challenge-fiap-GRUPO-02-2026/tech_challenge_3/blob/main/reports/final_report.md" target="_blank" rel="noopener"><span class="icon">📄</span><h3>Relatório Técnico (Markdown)</h3><p><code>reports/final_report.md</code> — fine-tuning, avaliação, arquitetura do assistente.</p></a>
+    <a class="card" href="https://github.com/tech-challenge-fiap-GRUPO-02-2026/tech_challenge_3/blob/main/docs/architecture.md" target="_blank" rel="noopener"><span class="icon">🗺️</span><h3>Arquitetura</h3><p><code>docs/architecture.md</code> — diagrama Mermaid completo e detalhamento do fluxo.</p></a>
+    <a class="card" href="https://github.com/tech-challenge-fiap-GRUPO-02-2026/tech_challenge_3" target="_blank" rel="noopener"><span class="icon">🐙</span><h3>Código-fonte Completo</h3><p>Repositório GitHub — todo o código, dados sintéticos, testes e scripts do projeto.</p></a>
   </div>
 </section>
 
@@ -441,13 +551,16 @@ python -m pytest -q   <span class="muted"># 26 passed</span>
   </p>
   <div class="cta-row">
     <a class="btn btn-primary" href="https://youtu.be/SEU_LINK_AQUI">▶ Assistir no YouTube</a>
-    <a class="btn btn-outline" href="README.md">📘 Ver README completo</a>
+    <a class="btn btn-outline" href="https://github.com/tech-challenge-fiap-GRUPO-02-2026/tech_challenge_3#readme" target="_blank" rel="noopener">📘 Ver README completo</a>
   </div>
 </section>
 
 <footer>
   <p>Tech Challenge Fase 3 · Pós-Graduação IA Para Desenvolvedores · FIAP · 2026</p>
   <p style="margin-top:6px">Projeto acadêmico com dados sintéticos — não utilizar em ambiente clínico real sem validação institucional e aprovação ética.</p>
+  <p style="margin-top:14px">
+    <a href="https://github.com/tech-challenge-fiap-GRUPO-02-2026/tech_challenge_3" target="_blank" rel="noopener">🐙 github.com/tech-challenge-fiap-GRUPO-02-2026/tech_challenge_3</a>
+  </p>
 </footer>
 
 </body>

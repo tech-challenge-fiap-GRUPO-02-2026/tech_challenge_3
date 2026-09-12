@@ -72,10 +72,14 @@ aceite de licença/token, ao contrário do Llama 3 oficial da Meta, que é
 *gated*). Os módulos do LoRA são **auto-detectados por família de
 arquitetura** (`default_lora_target_modules()`): `c_attn` para GPT-2,
 `q_proj/k_proj/v_proj/o_proj` para LLaMA/Mistral. Tentamos essa execução
-nesta máquina (sem GPU) e **cancelamos após quase 3h de CPU sem completar
-1 dos 10 passos configurados** — por isso o TinyLlama não é o padrão do
-projeto nem consta aqui como resultado concluído; fica registrado como
-capacidade suportada e verificável por quem tiver GPU disponível.
+nesta máquina, apenas em CPU (sem GPU), e **após mais de 6 horas de
+processamento sem completar sequer 1 dos 10 passos configurados, o
+computador desligou sozinho** por sobrecarga — por isso o TinyLlama não é
+o padrão do projeto nem consta aqui como resultado concluído; a equipe
+seguiu com o `distilgpt2` como modelo padrão. A capacidade fica
+registrada como suportada e verificável por quem tiver GPU disponível,
+inclusive com scripts de instalação do PyTorch para NVIDIA/AMD já
+prontos em `scripts/`.
 
 Hiperparâmetros (ver `src/finetuning/config.py`): `r=8`, `alpha=16`,
 `dropout=0.05`, 3 épocas, batch size 2, learning rate `2e-4`.
@@ -163,9 +167,10 @@ prontuário, assistente e fluxo clínico.
 - O modelo base usado por padrão (`distilgpt2`) é pequeno, escolhido por
   reprodutibilidade em CPU sem GPU; o pipeline suporta uma arquitetura
   LLaMA real (TinyLlama-1.1B) via `--base-model`, mas uma tentativa de
-  execução nesta máquina sem GPU foi cancelada após quase 3h de CPU sem
-  completar os 10 passos configurados — inviável como padrão sem
-  aceleração de hardware. Para uso real em produção, recomenda-se um
+  execução nesta máquina, só em CPU, passou de 6 horas de processamento
+  sem completar sequer 1 dos 10 passos configurados e terminou com o
+  computador desligando sozinho por sobrecarga — inviável como padrão
+  sem aceleração de hardware. Para uso real em produção, recomenda-se um
   modelo de 7B+
   parâmetros (Llama 3, Mistral)
   com infraestrutura de GPU dedicada.

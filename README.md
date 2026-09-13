@@ -207,7 +207,25 @@ na raiz do projeto. Ele:
 3. Abre o navegador padrão em `http://127.0.0.1:8765` automaticamente.
 
 > Para encerrar, feche a janela de terminal do backend (ou `Ctrl+C` nela).
-> Para rodar manualmente (Linux/Mac ou se preferir não usar o `.bat`):
+
+### Como abrir (Linux/Mac)
+
+Rode [`iniciar_assistente.sh`](iniciar_assistente.sh) na raiz do projeto:
+
+```bash
+./iniciar_assistente.sh
+```
+
+Ele:
+
+1. Confere se o ambiente virtual `.venv` existe (senão, avisa como criar);
+2. Sobe o backend (`python -m src.webapp.server`) na porta `8765`, em
+   segundo plano no mesmo terminal;
+3. Abre o navegador padrão em `http://127.0.0.1:8765` (`xdg-open` no
+   Linux, `open` no Mac).
+
+> Para encerrar, pressione `Ctrl+C` — o script derruba o backend
+> automaticamente. Se preferir rodar manualmente:
 > ```bash
 > python -m src.webapp.server
 > ```

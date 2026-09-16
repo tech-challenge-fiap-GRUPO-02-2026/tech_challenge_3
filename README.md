@@ -1,15 +1,27 @@
 <div align="center">
 
-# 🏥 Assistente Médico Virtual — Fine-tuning, LangChain & LangGraph
+# 🏥 Assistente Médico Virtual
+### Fine-tuning, LangChain & LangGraph
 
 **Tech Challenge Fase 3 · Pós-Graduação IA Para Desenvolvedores · FIAP**
 
-![Python](https://img.shields.io/badge/Python-3.11%2B-blue?logo=python&logoColor=white)
-![LangChain](https://img.shields.io/badge/LangChain-RAG%20%2B%20Pipeline-1C3C3C?logo=langchain&logoColor=white)
-![LangGraph](https://img.shields.io/badge/LangGraph-Fluxo%20Clinico-1C3C3C)
-![PEFT](https://img.shields.io/badge/PEFT-LoRA%20Fine--tuning-orange)
-![pytest](https://img.shields.io/badge/pytest-26%20passed-0A9EDC?logo=pytest&logoColor=white)
-![License](https://img.shields.io/badge/License-Academic-lightgrey)
+<p>
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white">
+  <img alt="LangChain" src="https://img.shields.io/badge/LangChain-RAG%20%2B%20Pipeline-1C3C3C?style=flat-square&logo=langchain&logoColor=white">
+  <img alt="LangGraph" src="https://img.shields.io/badge/LangGraph-Fluxo%20Clinico-1C3C3C?style=flat-square">
+  <img alt="PEFT" src="https://img.shields.io/badge/PEFT-LoRA%20Fine--tuning-F59E0B?style=flat-square">
+  <img alt="pytest" src="https://img.shields.io/badge/pytest-26%20passed-0A9EDC?style=flat-square&logo=pytest&logoColor=white">
+  <img alt="License" src="https://img.shields.io/badge/License-Academic-6B7280?style=flat-square">
+</p>
+
+<p>
+  <a href="https://youtu.be/ll_wW0i3zXM">
+    <img alt="Assistir no YouTube" src="https://img.shields.io/badge/%E2%96%B6%20Assistir%20Demonstra%C3%A7%C3%A3o-FF0000?style=for-the-badge&logo=youtube&logoColor=white">
+  </a>
+  <a href="https://tech-challenge-fiap-grupo-02-2026.github.io/tech_challenge_3/">
+    <img alt="Página do Projeto" src="https://img.shields.io/badge/%F0%9F%8C%90%20P%C3%A1gina%20do%20Projeto-064E3B?style=for-the-badge&logoColor=white">
+  </a>
+</p>
 
 </div>
 
@@ -548,18 +560,6 @@ Detalhes completos em [`docs/architecture.md`](docs/architecture.md) e
 
 ---
 
-## 🎬 Vídeo Demonstração
-
-[![Assistir no YouTube](https://img.shields.io/badge/YouTube-Assistir%20Demo-FF0000?logo=youtube&logoColor=white)](https://youtu.be/ll_wW0i3zXM)
-
----
-
-## 🌐 Apresentação do Projeto
-
-Página de apresentação disponível em [`index.html`](index.html).
-
----
-
 ## 🐙 Repositório GitHub
 
-> Atualizar com a URL definitiva do repositório do grupo para a Fase 3.
+[https://github.com/tech-challenge-fiap-GRUPO-02-2026/tech_challenge_3](https://github.com/tech-challenge-fiap-GRUPO-02-2026/tech_challenge_3)

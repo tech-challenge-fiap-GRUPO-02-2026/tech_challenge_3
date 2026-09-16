@@ -550,7 +550,7 @@ Detalhes completos em [`docs/architecture.md`](docs/architecture.md) e
 
 ## 🎬 Vídeo Demonstração
 
-[![Assistir no YouTube](https://img.shields.io/badge/YouTube-Assistir%20Demo-FF0000?logo=youtube&logoColor=white)](https://youtu.be/SEU_LINK_AQUI)
+[![Assistir no YouTube](https://img.shields.io/badge/YouTube-Assistir%20Demo-FF0000?logo=youtube&logoColor=white)](https://youtu.be/ll_wW0i3zXM)
 
 ---
 
